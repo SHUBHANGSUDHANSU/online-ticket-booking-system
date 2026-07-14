@@ -172,6 +172,16 @@ If your backend is running on a different port, start the frontend with:
 VITE_API_BASE_URL=http://127.0.0.1:8010 npm run dev
 ```
 
+## Deploy on Vercel
+
+This project includes Vercel configuration for deploying the React frontend and FastAPI backend together.
+
+```bash
+npx vercel --prod
+```
+
+For Vercel, the frontend calls the backend through `/api`. SQLite runs from `/tmp` on Vercel serverless functions, so this deployment is suitable as a demo. For a production app, use a hosted database instead of SQLite.
+
 ## Screenshots
 
 Add screenshots here after running the project locally:

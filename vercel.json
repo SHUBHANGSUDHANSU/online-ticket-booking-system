@@ -1,0 +1,20 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "npm run build",
+  "outputDirectory": "public",
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "/api/index.py"
+    },
+    {
+      "source": "/:path*",
+      "destination": "/index.html"
+    }
+  ],
+  "functions": {
+    "api/index.py": {
+      "excludeFiles": "{frontend/node_modules/**,frontend/dist/**,backend/.venv/**,backend/ticket_booking.db,**/__pycache__/**,**/*.pyc}"
+    }
+  }
+}

@@ -1,9 +1,16 @@
+import os
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
 
 
 # SQLite keeps this project simple because no external database setup is needed.
-SQLALCHEMY_DATABASE_URL = "sqlite:///./ticket_booking.db"
+if os.getenv("VERCEL"):
+    # Vercel serverless functions can write temporary files only in /tmp.
+    # This is fine for a demo deployment, but data can reset after cold starts.
+    SQLALCHEMY_DATABASE_URL = "sqlite:////tmp/ticket_booking.db"
+else:
+    SQLALCHEMY_DATABASE_URL = "sqlite:///./ticket_booking.db"
 
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL,

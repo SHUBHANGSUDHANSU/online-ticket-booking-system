@@ -1,6 +1,6 @@
 from contextlib import asynccontextmanager
 
-from fastapi import Depends, FastAPI
+from fastapi import APIRouter, Depends, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 
@@ -44,48 +44,54 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+router = APIRouter()
 
-@app.get("/")
+
+@router.get("/")
 def home():
     return {"message": "Online Ticket Booking System API is running"}
 
 
-@app.post("/register", response_model=schemas.UserResponse)
+@router.post("/register", response_model=schemas.UserResponse)
 def register(user: schemas.UserCreate, db: Session = Depends(get_db)):
     return crud.create_user(db, user)
 
 
-@app.post("/login", response_model=schemas.LoginResponse)
+@router.post("/login", response_model=schemas.LoginResponse)
 def login(login_data: schemas.UserLogin, db: Session = Depends(get_db)):
     user = crud.login_user(db, login_data)
     return {"message": "Login successful", "user": user}
 
 
-@app.get("/events", response_model=list[schemas.EventResponse])
+@router.get("/events", response_model=list[schemas.EventResponse])
 def list_events(db: Session = Depends(get_db)):
     return crud.get_events(db)
 
 
-@app.get("/events/{event_id}", response_model=schemas.EventResponse)
+@router.get("/events/{event_id}", response_model=schemas.EventResponse)
 def event_details(event_id: int, db: Session = Depends(get_db)):
     return crud.get_event(db, event_id)
 
 
-@app.get("/events/{event_id}/seats", response_model=list[schemas.SeatResponse])
+@router.get("/events/{event_id}/seats", response_model=list[schemas.SeatResponse])
 def event_seats(event_id: int, db: Session = Depends(get_db)):
     return crud.get_event_seats(db, event_id)
 
 
-@app.post("/bookings", response_model=schemas.BookingResponse)
+@router.post("/bookings", response_model=schemas.BookingResponse)
 def book_ticket(booking: schemas.BookingCreate, db: Session = Depends(get_db)):
     return crud.create_booking(db, booking)
 
 
-@app.get("/users/{user_id}/bookings", response_model=list[schemas.BookingResponse])
+@router.get("/users/{user_id}/bookings", response_model=list[schemas.BookingResponse])
 def booking_history(user_id: int, db: Session = Depends(get_db)):
     return crud.get_user_bookings(db, user_id)
 
 
-@app.delete("/bookings/{booking_id}", response_model=schemas.CancelBookingResponse)
+@router.delete("/bookings/{booking_id}", response_model=schemas.CancelBookingResponse)
 def cancel_ticket(booking_id: int, user_id: int, db: Session = Depends(get_db)):
     return crud.cancel_booking(db, booking_id, user_id)
+
+
+app.include_router(router)
+app.include_router(router, prefix="/api")
