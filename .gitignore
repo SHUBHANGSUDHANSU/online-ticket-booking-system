@@ -1,5 +1,6 @@
 backend/ticket_booking.db
 backend/__pycache__/
+**/__pycache__/
 backend/*.pyc
 backend/.venv/
 frontend/node_modules/
