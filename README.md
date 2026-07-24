@@ -182,28 +182,4 @@ npx vercel --prod
 
 For Vercel, the frontend calls the backend through `/api`. SQLite runs from `/tmp` on Vercel serverless functions, so this deployment is suitable as a demo. For a production app, use a hosted database instead of SQLite.
 
-## Screenshots
 
-Add screenshots here after running the project locally:
-
-- Register page
-- Login page
-- Events page
-- Seat selection page
-- Booking history page
-
-## Interview Explanation
-
-This project is a basic online ticket booking system. I built it to understand backend API development, database relationships, and real-world booking logic. The main challenge was preventing duplicate seat booking. For that, whenever a user selects a seat, the backend first checks if the seat is already booked. If it is available, the system creates a booking entry and updates the seat status as booked. This keeps the booking data consistent.
-
-I also added booking cancellation. When a user cancels a booking, the backend deletes the booking entry and marks the related seat as available again. This is done in one database commit so the booking and seat status stay consistent.
-
-The backend uses FastAPI routes for user registration, login, event listing, seat listing, booking, and booking history. SQLAlchemy models define relationships between users, events, seats, and bookings. SQLite is used so the project can run locally without external setup.
-
-## Resume Bullet Points
-
-- Built a full-stack online ticket booking system using FastAPI, React, SQLite, and SQLAlchemy.
-- Designed database tables and relationships for users, events, seats, and bookings.
-- Implemented REST APIs for user registration, login, event listing, seat selection, ticket booking, cancellation, and booking history.
-- Added duplicate seat booking prevention by checking seat availability before creating a booking and updating seat status.
-- Created seed data for sample events and seats to make the project easy to test from Swagger UI.
