@@ -1,6 +1,6 @@
 # Online Ticket Booking System
 
-A simple full-stack ticket booking system built with FastAPI, SQLite, SQLAlchemy, and React. This project is designed for a fresher SDE resume and focuses on backend APIs, database relationships, CRUD operations, and preventing duplicate seat booking.
+A simple full-stack ticket booking system built with FastAPI, SQLite, SQLAlchemy, and React. It focuses on backend API design, relational schema modelling, and preventing duplicate seat bookings.
 
 ## Project Overview
 
